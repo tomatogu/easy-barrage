@@ -1,0 +1,29 @@
+{
+  "name": "easy-barrage",
+  "version": "1.0.0",
+  "description": "简单实现一个弹幕库",
+  "main": "index.js",
+  "scripts": {
+    "dev": "webpack-dev-server --mode development"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tomatogu/easy-barrage.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/tomatogu/easy-barrage/issues"
+  },
+  "homepage": "https://github.com/tomatogu/easy-barrage#readme",
+  "devDependencies": {
+    "babel-core": "^6.26.3",
+    "babel-loader": "^7.1.5",
+    "babel-preset-env": "^1.7.0",
+    "css-loader": "^3.1.0",
+    "style-loader": "^0.23.1",
+    "webpack": "^4.37.0",
+    "webpack-cli": "^3.3.6",
+    "webpack-dev-server": "^3.7.2"
+  }
+}
