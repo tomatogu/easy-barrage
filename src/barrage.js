@@ -6,12 +6,28 @@ class Barrage {
       console.warn('container 字段有误')
       return
     }
+
+    // 检查速度值是否合法
+    if (options.speed !== undefined && !this._checkSpeed(options.speed)) {
+      alert('speed 字段有误')
+      console.warn('spped 字段有误')
+      return
+    }
+
+    // 检查showAvatar
+    if (options.showAvatar !== undefined && typeof options.showAvatar !== 'boolean') {
+      alert('showAvatar 字段有误')
+      console.warn('showAvatar 字段有误')
+      return
+    }
     
     const data = Object.assign({}, {
       data: [],
       barrageItem: {
         height: 26
-      }
+      },
+      speed: 3,
+      showAvatar: false
     }, options)
 
     this.container = data.container
@@ -19,6 +35,8 @@ class Barrage {
     // 弹幕状态映射
     this.itemStatusMap = new Array(this.data.length).fill(true)
     this.itemHeight = data.barrageItem.height
+    this.speed = data.speed * 0.0293
+    this.showAvatar = data.showAvatar
   }
 
   init () {
@@ -48,15 +66,14 @@ class Barrage {
     const data = this.data[pointer]
     const el = document.createElement('div')
     el.classList.add('barrage')
-    const startLeft = this.containerWidth + Math.floor(Math.random() * 30)
+    const startLeft = this.containerWidth + Math.floor(Math.random() * 50)
     const top = lane * this.itemHeight + lane * this.gap
     el.style = `top: ${top}px; left: ${ startLeft }px; height: ${this.itemHeight}px; border-radius: ${this.itemHeight / 2}px`
-    el.innerHTML = `<img class="avatar" src="${data.avatar}" />
-      <p class="nickname">${data.nickname}：</p>
+    el.innerHTML = `${this.showAvatar ? '<img class="avatar" src="' + data.avatar + '" />' : ''}
       <p class="content">${data.text}</p>`
     this.container.appendChild(el)
     const width = el.offsetWidth
-    const animateTime = Math.floor((width + this.containerWidth) / 0.088)
+    const animateTime = Math.ceil((width + startLeft) / this.speed)
     
     this.animate(el, startLeft, -width, animateTime, () => {
       this.itemStatusMap[pointer] = true
@@ -124,6 +141,10 @@ class Barrage {
 
   _isDom (el) {
     return el && typeof el === 'object' && el.nodeType === 1 && typeof el.nodeName === 'string'
+  }
+
+  _checkSpeed (speed) {
+    return speed % 1 === 0 && speed >=1 && speed <= 5
   }
 }
 

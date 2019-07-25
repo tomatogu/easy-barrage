@@ -9,7 +9,9 @@ const barrage = new Barrage({
   data: barrageData,
   barrageItem: {
     height: 26
-  }
+  },
+  speed: 3,
+  showAvatar: true
 })
 
 barrage.init()
