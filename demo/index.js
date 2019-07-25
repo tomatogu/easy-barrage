@@ -7,11 +7,10 @@ const el = document.getElementsByClassName('container')[0]
 const barrage = new Barrage({
   container: el,
   data: barrageData,
-  barrageItem: {
-    height: 26
-  },
+  barrageHeight: 26,
   speed: 3,
-  showAvatar: true
+  showAvatar: true,
+  infinite: true
 })
 
 barrage.init()

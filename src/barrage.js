@@ -20,23 +20,30 @@ class Barrage {
       console.warn('showAvatar 字段有误')
       return
     }
+
+    // 检查infinite
+    if (options.infinite !== undefined && typeof options.infinite !== 'boolean') {
+      alert('infinite 字段有误')
+      console.warn('infinite 字段有误')
+      return
+    }
     
     const data = Object.assign({}, {
       data: [],
-      barrageItem: {
-        height: 26
-      },
+      barrageHeight: 26,
       speed: 3,
-      showAvatar: false
+      showAvatar: false,
+      infinite: false
     }, options)
 
     this.container = data.container
     this.data = data.data
     // 弹幕状态映射
     this.itemStatusMap = new Array(this.data.length).fill(true)
-    this.itemHeight = data.barrageItem.height
+    this.itemHeight = data.barrageHeight
     this.speed = data.speed * 0.0293
     this.showAvatar = data.showAvatar
+    this.infinite = data.infinite
   }
 
   init () {
@@ -52,6 +59,12 @@ class Barrage {
         for (let i = 0; i < this.laneCount; i++) {
           const lane = this.getLane()
           const pointer = this.getOneBarrage()
+          // 非无限轮播时，弹幕全部滚动结束的情况
+          if (pointer === -1 && !this.infinite) {
+            clearInterval(this.timer)
+            return
+          }
+
           if (lane > -1 && pointer > -1) {
             this.laneStatus[lane] = false
             this.initItemDom(pointer, lane)
@@ -76,7 +89,9 @@ class Barrage {
     const animateTime = Math.ceil((width + startLeft) / this.speed)
     
     this.animate(el, startLeft, -width, animateTime, () => {
-      this.itemStatusMap[pointer] = true
+      if (this.infinite) {
+        this.itemStatusMap[pointer] = true
+      }
       el.remove()
     })
     
@@ -91,6 +106,7 @@ class Barrage {
     this.containerHeight = this.container.clientHeight
     this.laneCount = Math.floor(this.containerHeight / this.itemHeight)
     this.laneStatus = new Array(this.laneCount).fill(true)
+    // 上下弹幕之间的间隙
     this.gap = Math.floor(this.containerHeight % this.itemHeight / (this.laneCount - 1))
   }
 
