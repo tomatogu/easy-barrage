@@ -21,7 +21,7 @@
 
 ### **附上效果**
 
-![](demo/img/demo.png)
+![](demo/img/barrage-demo.png)
 
 ### **使用方法**
 
