@@ -47,7 +47,7 @@
 
 ### **本地运行**
 
-  git clone
-  npm install
-  npm run dev
-  浏览器打开 http://0.0.0.0:8080 即可预览
+    git clone
+    npm install
+    npm run dev
+    浏览器打开 http://0.0.0.0:8080 即可预览
